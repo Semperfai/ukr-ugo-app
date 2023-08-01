@@ -22,6 +22,23 @@
             theId="firstInput"
             @isActive="isPickupActive = true" />
         </div>
+        <div class="mb-3">
+          <AutoCompleteInput
+            v-model:input="destination"
+            placeholder="Where to?"
+            theId="secondInput"
+            @isActive="isPickupActive = false" />
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center custom-border-bottom">
+      <div class="bg-gray-400 mx-5 mt-3.5 p-1.5 rounded-full">
+        <MapMarkerIcon :size="30" fillColor="#f5f5f5" />
+      </div>
+      <div>
+        <p class="text-lg text-gray-600">Kyiv, UA</p>
+        <p class="text-lg text-gray-400">UA</p>
       </div>
     </div>
   </div>
@@ -35,6 +52,7 @@ import { ref } from 'vue'
 
 const isPickupActive = ref(true)
 const pickup = ref('')
+const destination = ref('')
 </script>
 
 <style scoped>

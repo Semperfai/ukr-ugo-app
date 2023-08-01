@@ -18,7 +18,7 @@ import WindowCloseIcon from 'vue-material-design-icons/WindowClose.vue'
 import { Props } from './types'
 
 const emit = defineEmits<{
-  (e: 'isActive', state: boolean): void
+  (e: 'isActive'): void
   (e: 'clearInput'): void
   (e: 'update:input', val: string): void
 }>()
