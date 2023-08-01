@@ -14,7 +14,7 @@
           {{ text }}
         </div>
         <div class="mt-3 mr-1">
-          <img :width="imageWidth" :src="'img/ukr-ugo/' + image + '.png'" />
+          <img :width="imageWidth" :src="'img/ukr-ugo/' + iconName + '.png'" />
         </div>
       </div>
     </div>
@@ -23,14 +23,12 @@
 
 <script setup lang="ts">
 import { toRefs } from 'vue'
+import { type Props } from './types'
 
-const props = defineProps({
-  text: String,
-  imageWidth: String,
-  image: String,
-  promo: { Boolean, default: false }
+const props = withDefaults(defineProps<Props>(), {
+  promo: false
 })
-const { text, imageWidth, image, promo } = toRefs(props)
+const { text, imageWidth, iconName, promo } = toRefs(props)
 </script>
 
 <style scoped>

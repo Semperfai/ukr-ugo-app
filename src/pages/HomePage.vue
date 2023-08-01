@@ -8,10 +8,10 @@
           :promo="true"
           text="Ride"
           imageWidth="74"
-          image="ride" />
+          icon-name="ride" />
         <div class="grid grid-cols-4 gap-3">
-          <ServiceSelectSmall text="PWA guide" image="pwa" />
-          <ServiceSelectSmall text="About app" image="info" />
+          <ServiceSelectSmall text="PWA guide" icon-name="pwa" />
+          <ServiceSelectSmall text="About app" icon-name="info" />
         </div>
       </div>
     </div>
@@ -19,6 +19,6 @@
 </template>
 
 <script setup lang="ts">
-import ServiceSelectLarge from '@/components/ServiceSelectLarge.vue'
-import ServiceSelectSmall from '@/components/ServiceSelectSmall.vue'
+import ServiceSelectLarge from '@/components/ServiceSelectLarge/ServiceSelectLarge.vue'
+import ServiceSelectSmall from '@/components/ServiceSelectSmall/ServiceSelectSmall.vue'
 </script>
