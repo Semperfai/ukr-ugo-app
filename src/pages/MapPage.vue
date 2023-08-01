@@ -9,10 +9,10 @@ import { ref, onMounted } from 'vue'
 import mapStyles from '@/mapStyles'
 
 async function initMap() {
-  const directionsService = new window.google.maps.DirectionsService()
-  const directionsRenderer = new window.google.maps.DirectionsRenderer()
+  const directionsService = new google.maps.DirectionsService()
+  const directionsRenderer = new google.maps.DirectionsRenderer()
 
-  const map = new window.google.maps.Map(
+  const map = new google.maps.Map(
     document.getElementById('map') as HTMLElement,
     {
       center: { lat: -34, lng: 150 },
