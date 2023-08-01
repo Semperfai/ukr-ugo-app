@@ -6,8 +6,12 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import mapStyles from '@/mapStyles'
 
 async function initMap() {
+  const directionsService = new window.google.maps.DirectionsService()
+  const directionsRenderer = new window.google.maps.DirectionsRenderer()
+
   const map = new window.google.maps.Map(
     document.getElementById('map') as HTMLElement,
     {
@@ -18,7 +22,8 @@ async function initMap() {
       fullscreenControl: false,
       zoomControl: false,
       streetViewControl: false,
-      mapTypeControl: false
+      mapTypeControl: false,
+      styles: mapStyles()
     }
   )
 }
@@ -26,7 +31,7 @@ async function initMap() {
 onMounted(() => {
   setTimeout(() => {
     initMap()
-  }, 50)
+  }, 200)
 })
 </script>
 
