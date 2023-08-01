@@ -8,7 +8,9 @@
       </div>
     </div>
 
-    <div class="text-lg text-center mt-2 text-gray-900">{{ text }}</div>
+    <div class="text-sm md:text-lg text-center mt-2 text-gray-900">
+      {{ text }}
+    </div>
   </div>
 </template>
 
