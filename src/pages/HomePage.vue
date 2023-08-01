@@ -1,7 +1,24 @@
 <template>
-  <div class="home">
-    <h1>HOME TEST</h1>
+  <div id="Home" class="flex flex-col h-screen">
+    <div class="m-3 mb-auto">
+      <div class="my-20"></div>
+
+      <div class="grid grid-cols-2 gap-3 my-3">
+        <ServiceSelectLarge
+          :promo="true"
+          text="Ride"
+          imageWidth="74"
+          image="ride" />
+        <div class="grid grid-cols-4 gap-3">
+          <ServiceSelectSmall text="PWA guide" image="pwa" />
+          <ServiceSelectSmall text="About app" image="info" />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import ServiceSelectLarge from '@/components/ServiceSelectLarge.vue'
+import ServiceSelectSmall from '@/components/ServiceSelectSmall.vue'
+</script>
