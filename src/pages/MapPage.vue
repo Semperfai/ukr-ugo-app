@@ -8,24 +8,23 @@
 import { ref, onMounted } from 'vue'
 import mapStyles from '@/mapStyles'
 
-async function initMap() {
-  const directionsService = new google.maps.DirectionsService()
-  const directionsRenderer = new google.maps.DirectionsRenderer()
+let map: google.maps.Map
 
-  const map = new google.maps.Map(
-    document.getElementById('map') as HTMLElement,
-    {
-      center: { lat: -34, lng: 150 },
-      zoom: 4,
-      minZoom: 3,
-      maxZoom: 17,
-      fullscreenControl: false,
-      zoomControl: false,
-      streetViewControl: false,
-      mapTypeControl: false,
-      styles: mapStyles()
-    }
-  )
+async function initMap(): Promise<void> {
+  const { Map } = (await google.maps.importLibrary(
+    'maps'
+  )) as google.maps.MapsLibrary
+  map = new Map(document.getElementById('map') as HTMLElement, {
+    center: { lat: 48.3794, lng: 31.1656 },
+    zoom: 4,
+    minZoom: 4,
+    maxZoom: 17,
+    fullscreenControl: false,
+    zoomControl: false,
+    streetViewControl: false,
+    mapTypeControl: false,
+    styles: mapStyles()
+  })
 }
 
 onMounted(() => {
