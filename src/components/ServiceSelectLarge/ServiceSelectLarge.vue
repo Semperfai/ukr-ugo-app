@@ -1,7 +1,7 @@
 <template>
   <div id="ServiceSetupLarge">
     <div
-      class="custom-height w-full rounded-2xl bg-lime-200 hover:bg-lime-300 transition-all duration-200 ease-in">
+      class="custom-height w-full rounded-2xl bg-service-sel-large hover:bg-lime-300">
       <div v-if="promo" class="w-full relative z-10">
         <span
           class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-700 p-0.5 px-2 text-gray-100 rounded-3xl text-xs">
