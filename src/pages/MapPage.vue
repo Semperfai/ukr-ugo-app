@@ -9,7 +9,7 @@
         Distance: 0 km
       </div>
       <div class="scrollSection">
-        <div class="bg-service-sel-large hover:bg-lime-300">
+        <div class="bg-slate-200 hover:bg-slate-300">
           <div class="flex items-center px-4 py-5">
             <img width="75" src="img/ukr-ugo/x.png" alt="car" />
             <div class="w-full ml-3">
@@ -45,6 +45,14 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div
+        class="flex items-center justify-center bg-white py-6 px-4 w-full absolute bottom-0 shadow-inner">
+        <button
+          class="bg-black text-2xl text-white py-4 px-4 rounded-sm w-full hover:bg-white hover:text-black hover:border-[3px] hover:border-cyan-950 transition-all duration-200 ease-in">
+          Confirm
+        </button>
       </div>
     </div>
   </div>

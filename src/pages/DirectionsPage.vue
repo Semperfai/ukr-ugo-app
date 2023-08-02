@@ -50,9 +50,9 @@ import ArrowLeftIcon from 'vue-material-design-icons/ArrowLeft.vue'
 import MapMarkerIcon from 'vue-material-design-icons/MapMarker.vue'
 import { ref } from 'vue'
 
-const isPickupActive = ref(true)
-const pickup = ref('')
-const destination = ref('')
+const isPickupActive = ref<boolean>(true)
+const pickup = ref<string>('')
+const destination = ref<string>('')
 </script>
 
 <style scoped>
