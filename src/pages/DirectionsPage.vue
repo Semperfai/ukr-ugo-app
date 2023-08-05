@@ -123,6 +123,8 @@ watch(destination, async (destination) => {
 
 onMounted(() => {
   const inputFrom = document.getElementById("inputFrom");
+  pickup.value = direction.pickup;
+  destination.value = direction.destination;
   if (inputFrom) {
     inputFrom.focus();
   }

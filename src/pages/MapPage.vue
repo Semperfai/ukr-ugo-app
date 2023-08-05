@@ -52,7 +52,7 @@
         class="flex items-center justify-center bg-white py-6 px-4 w-full absolute bottom-0 shadow-inner"
       >
         <button
-          class="bg-black text-2xl text-white py-4 px-4 rounded-sm w-full hover:bg-white hover:text-black hover:border-[3px] hover:border-cyan-950 transition-all duration-200 ease-in"
+          class="bg-black text-2xl lg:max-w-xl text-white py-4 px-4 rounded-sm w-full hover:bg-white hover:text-black hover:border-[3px] hover:border-cyan-950 transition-all duration-200 ease-in"
         >
           Confirm
         </button>
