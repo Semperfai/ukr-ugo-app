@@ -1,5 +1,5 @@
 export interface Props {
-  theId: string
-  input: string
-  placeholder: string
+  theId: string;
+  input: string | null;
+  placeholder: string;
 }

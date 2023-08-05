@@ -20,7 +20,7 @@ import { Props } from "@/components/AutoCompleteInput/types";
 const emit = defineEmits<{
   (e: "is-active", val: boolean): void;
   (e: "clearInput"): void;
-  (e: "update:input", val: string): void;
+  (e: "update:input", val: string | null): void;
 }>();
 
 const props = defineProps<Props>();
