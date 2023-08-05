@@ -64,17 +64,39 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import mapStyles from "@/mapStyles";
+import { useDirectionStore } from "@/stores/direction";
+import { ref } from "vue";
 
+const direction = useDirectionStore();
 let map: google.maps.Map;
+const latLng = ref({
+  start: {
+    lat: null,
+    lng: null,
+  },
+  end: {
+    lat: null,
+    lng: null,
+  },
+});
 
 async function initMap(): Promise<void> {
+  const directionsService = new window.google.maps.DirectionsService();
+  const directionsRenderer = new window.google.maps.DirectionsRenderer();
+
+  directionsRenderer.setOptions({
+    polylineOptions: {
+      strokeColor: "#212121",
+      strokeWeight: 5,
+    },
+  });
+
   const { Map } = (await google.maps.importLibrary(
     "maps"
   )) as google.maps.MapsLibrary;
   map = new Map(document.getElementById("map") as HTMLElement, {
-    center: { lat: 48.3794, lng: 31.1656 },
     zoom: 4,
-    minZoom: 4,
+    minZoom: 3,
     maxZoom: 17,
     fullscreenControl: false,
     zoomControl: false,
@@ -82,8 +104,44 @@ async function initMap(): Promise<void> {
     mapTypeControl: false,
     styles: mapStyles(),
   });
-}
 
+  if (direction.pickup && direction.destination) {
+    getDirections(map, directionsRenderer, directionsService);
+  }
+}
+const getDirections = (
+  map: google.maps.Map,
+  directionsRenderer: google.maps.DirectionsRenderer,
+  directionsService: google.maps.DirectionsService
+) => {
+  directionsRenderer.setMap(map);
+
+  const request = {
+    origin: direction.pickup,
+    destination: direction.destination,
+    optimizeWaypoints: true,
+    travelMode: "DRIVING",
+  };
+
+  directionsService.route(
+    request,
+    (
+      result: { routes: { legs: { end: { lat: () => null } }[] }[] },
+      status: string
+    ) => {
+      if (status === "OK") {
+        latLng.value.start.lat =
+          result?.routes[0]?.legs[0].start_location.lat();
+        latLng.value.start.lng =
+          result?.routes[0]?.legs[0].start_location.lat();
+        latLng.value.end.lng = result?.routes[0]?.legs[0].end.lat();
+        latLng.value.end.lng = result?.routes[0]?.legs[0].end.lat();
+
+        directionsRenderer.setDirections(result);
+      }
+    }
+  );
+};
 onMounted(() => {
   setTimeout(() => {
     initMap();

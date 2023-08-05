@@ -82,8 +82,10 @@ const storeAddress = (address: string) => {
     direction.destination = address;
     destination.value = address;
   }
-  if (direction.pickup.length > 0 && direction.destination.length > 0) {
-    router.push("/map");
+  if (direction.destination !== null && direction.pickup) {
+    if (direction.pickup?.length > 0 && direction.destination?.length > 0) {
+      router.push("/map");
+    }
   }
 };
 
@@ -100,7 +102,7 @@ const findAddress = debounce(async (address?: string) => {
   }
 }, 300);
 
-const clearInputFunc = (inputId) => {
+const clearInputFunc = (inputId: string) => {
   if (inputId === "inputFrom") {
     pickup.value = "";
     direction.pickup = "";
