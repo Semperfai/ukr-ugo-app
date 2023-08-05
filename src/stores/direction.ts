@@ -1,12 +1,12 @@
 import { defineStore } from "pinia";
 interface State {
-  pickup: string | null;
-  destination: string | null;
+  pickup: string;
+  destination: string;
 }
 export const useDirectionStore = defineStore("direction", {
   state: (): State => ({
-    pickup: null,
-    destination: null,
+    pickup: "",
+    destination: "",
   }),
   actions: {},
   persist: true,

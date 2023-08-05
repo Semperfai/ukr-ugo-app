@@ -15,7 +15,7 @@
             <img width="75" src="img/ukr-ugo/x.png" alt="car" />
             <div class="w-full ml-3">
               <div class="flex items-center justify-between">
-                <p class="text-2xl mb-1">UkrUgoX</p>
+                <p class="text-2xl mb-1">UUgoX</p>
                 <p class="text-xl">$ 55.5</p>
               </div>
               <p class="text-xl">7 hourse</p>
@@ -27,7 +27,7 @@
             <img width="75" src="img/ukr-ugo/comfort.png" alt="car" />
             <div class="w-full ml-3">
               <div class="flex items-center justify-between">
-                <p class="text-2xl mb-1">UkrUgoComfort</p>
+                <p class="text-2xl mb-1">UUgoComfort</p>
                 <p class="text-xl">$ 55.5</p>
               </div>
               <p class="text-xl">7 hourse</p>
@@ -39,7 +39,7 @@
             <img width="75" src="img/ukr-ugo/xl.png" alt="car" />
             <div class="w-full ml-3">
               <div class="flex items-center justify-between">
-                <p class="text-2xl mb-1">UkrUgoXL</p>
+                <p class="text-2xl mb-1">UUgoXL</p>
                 <p class="text-xl">$ 55.5</p>
               </div>
               <p class="text-xl">7 hourse</p>
@@ -71,12 +71,12 @@ const direction = useDirectionStore();
 let map: google.maps.Map;
 const latLng = ref({
   start: {
-    lat: null,
-    lng: null,
+    lat: 0,
+    lng: 0,
   },
   end: {
-    lat: null,
-    lng: null,
+    lat: 0,
+    lng: 0,
   },
 });
 
@@ -116,31 +116,25 @@ const getDirections = (
 ) => {
   directionsRenderer.setMap(map);
 
-  const request = {
+  const request: google.maps.DirectionsRequest = {
     origin: direction.pickup,
     destination: direction.destination,
-    optimizeWaypoints: true,
-    travelMode: "DRIVING",
+    optimizeWaypoints: true, // set to true if you want google to determine the shortest route or false to use the order specified.
+    travelMode: google.maps.TravelMode.DRIVING,
   };
 
-  directionsService.route(
-    request,
-    (
-      result: { routes: { legs: { end: { lat: () => null } }[] }[] },
-      status: string
-    ) => {
-      if (status === "OK") {
-        latLng.value.start.lat =
-          result?.routes[0]?.legs[0].start_location.lat();
-        latLng.value.start.lng =
-          result?.routes[0]?.legs[0].start_location.lat();
-        latLng.value.end.lng = result?.routes[0]?.legs[0].end.lat();
-        latLng.value.end.lng = result?.routes[0]?.legs[0].end.lat();
-
-        directionsRenderer.setDirections(result);
+  directionsService.route(request, function (result, status) {
+    if (status === "OK") {
+      if (result) {
+        latLng.value.start.lat = result.routes[0].legs[0].start_location.lat();
+        latLng.value.start.lng = result.routes[0].legs[0].start_location.lng();
+        latLng.value.end.lat = result.routes[0].legs[0].end_location.lat();
+        latLng.value.end.lng = result.routes[0].legs[0].end_location.lng();
       }
+
+      directionsRenderer.setDirections(result);
     }
-  );
+  });
 };
 onMounted(() => {
   setTimeout(() => {
