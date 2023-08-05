@@ -9,7 +9,8 @@
           <div :class="[isPickupActive ? 'circle-black' : 'circle-gray']"></div>
           <div class="line"></div>
           <div
-            :class="[!isPickupActive ? 'square-black' : 'square-gray']"></div>
+            :class="[!isPickupActive ? 'square-black' : 'square-gray']"
+          ></div>
         </div>
       </div>
 
@@ -19,40 +20,71 @@
           <AutoCompleteInput
             v-model:input="pickup"
             placeholder="Enter"
-            theId="firstInput"
-            @isActive="isPickupActive = true" />
+            theId="inputFrom"
+            @is-active="isPickupActive = true"
+          />
         </div>
         <div class="mb-3">
           <AutoCompleteInput
             v-model:input="destination"
             placeholder="Where to?"
-            theId="secondInput"
-            @isActive="isPickupActive = false" />
+            theId="inputTo"
+            @is-active="isPickupActive = false"
+          />
         </div>
       </div>
     </div>
 
-    <div class="flex items-center custom-border-bottom">
-      <div class="bg-gray-400 mx-5 mt-3.5 p-1.5 rounded-full">
-        <MapMarkerIcon :size="30" fillColor="#f5f5f5" />
-      </div>
-      <div>
-        <p class="text-lg text-gray-600">Kyiv, UA</p>
-        <p class="text-lg text-gray-400">UA</p>
+    <div v-for="address in addressData" :key="address">
+      <div class="flex items-center custom-border-bottom">
+        <div class="bg-gray-400 mx-5 p-1.5 rounded-full">
+          <MapMarkerIcon :size="30" fillColor="#f5f5f5" />
+        </div>
+        <div>
+          <p class="text-lg text-gray-600">{{ address?.description }}</p>
+          <p class="text-lg text-gray-400">{{ address?.terms[2].value }}</p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import AutoCompleteInput from '@/components/AutoCompleteInput/AutoCompleteInput.vue'
-import ArrowLeftIcon from 'vue-material-design-icons/ArrowLeft.vue'
-import MapMarkerIcon from 'vue-material-design-icons/MapMarker.vue'
-import { ref } from 'vue'
+import AutoCompleteInput from "@/components/AutoCompleteInput/AutoCompleteInput.vue";
+import ArrowLeftIcon from "vue-material-design-icons/ArrowLeft.vue";
+import MapMarkerIcon from "vue-material-design-icons/MapMarker.vue";
+import { debounce } from "lodash";
+import { onMounted, ref, watch } from "vue";
+import axios from "axios";
 
-const isPickupActive = ref<boolean>(true)
-const pickup = ref<string>('')
-const destination = ref<string>('')
+const isPickupActive = ref<boolean>(true);
+const pickup = ref<string>("");
+const destination = ref<string>("");
+const addressData = ref<any>(null);
+//methods
+const findAddress = debounce(async (address?: string) => {
+  if (address === null || address === "null" || address === "") return;
+  try {
+    let res = await axios.get("address/" + address);
+    addressData.value = res.data;
+  } catch (error: Error | unknown) {
+    console.log(error);
+  }
+}, 300);
+
+watch(pickup, async (pickup) => {
+  await findAddress(pickup);
+});
+watch(destination, async (destination) => {
+  await findAddress(destination);
+});
+
+onMounted(() => {
+  const inputFrom = document.getElementById("inputFrom");
+  if (inputFrom) {
+    inputFrom.focus();
+  }
+});
 </script>
 
 <style scoped>

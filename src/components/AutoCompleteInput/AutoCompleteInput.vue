@@ -1,15 +1,15 @@
 <template>
-  <div id="AutoCompleteInput" class="flex items-center gap-2">
+  <div id="AutoCompleteInput" class="flex items-center">
     <input
       :id="theId"
-      :value="inputComputed"
+      @click="emit('is-active', true)"
+      v-model="inputComputed"
+      class="text-md bg-gray-100 appearance-none rounded w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:bg-gray-200"
+      type="text"
       :placeholder="placeholder"
       autocomplete="off"
-      @click="emit('isActive', true)"
-      type="text"
-      class="text-md bg-gray-100 appearance-none w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:bg-gray-200"
     />
-    <WindowCloseIcon fillColor="#2e2e2d" @click="emit('clearInput')" />
+    <WindowCloseIcon fillColor="#2e2e2d" @click="$emit('clearInput')" />
   </div>
 </template>
 
@@ -18,7 +18,7 @@ import { computed, toRefs } from "vue";
 import WindowCloseIcon from "vue-material-design-icons/WindowClose.vue";
 import { Props } from "@/components/AutoCompleteInput/types";
 const emit = defineEmits<{
-  (e: "isActive", val: boolean): void;
+  (e: "is-active", val: boolean): void;
   (e: "clearInput"): void;
   (e: "update:input", val: string): void;
 }>();
