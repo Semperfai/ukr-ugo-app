@@ -1,10 +1,12 @@
 <template>
   <div id="ServiceSetupLarge">
     <div
-      class="custom-height w-full rounded-2xl bg-service-sel-large hover:bg-lime-300">
+      class="custom-height w-full rounded-2xl bg-service-sel-large hover:bg-lime-300"
+    >
       <div v-if="promo" class="w-full relative z-10">
         <span
-          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-700 p-0.5 px-2 text-gray-100 rounded-3xl text-xs">
+          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-700 p-0.5 px-2 text-gray-100 rounded-3xl text-xs"
+        >
           Promo
         </span>
       </div>
@@ -22,13 +24,13 @@
 </template>
 
 <script setup lang="ts">
-import { toRefs } from 'vue'
-import { type Props } from './types'
+import { toRefs } from "vue";
+import { type Props } from "@/components/ServiceSelectLarge/types";
 
 const props = withDefaults(defineProps<Props>(), {
-  promo: false
-})
-const { text, imageWidth, iconName, promo } = toRefs(props)
+  promo: false,
+});
+const { text, imageWidth, iconName, promo } = toRefs(props);
 </script>
 
 <style scoped>

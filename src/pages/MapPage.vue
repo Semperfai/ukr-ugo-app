@@ -5,7 +5,8 @@
     <div id="VehicleSelection" class="w-full">
       <div class="w-full h-2 border-t"></div>
       <div
-        class="w-full text-center border-t-2 p-1.5 text-gray-700 text-lg font-semibold">
+        class="w-full text-center border-t-2 p-1.5 text-gray-700 text-lg font-semibold"
+      >
         Distance: 0 km
       </div>
       <div class="scrollSection">
@@ -48,9 +49,11 @@
       </div>
 
       <div
-        class="flex items-center justify-center bg-white py-6 px-4 w-full absolute bottom-0 shadow-inner">
+        class="flex items-center justify-center bg-white py-6 px-4 w-full absolute bottom-0 shadow-inner"
+      >
         <button
-          class="bg-black text-2xl text-white py-4 px-4 rounded-sm w-full hover:bg-white hover:text-black hover:border-[3px] hover:border-cyan-950 transition-all duration-200 ease-in">
+          class="bg-black text-2xl text-white py-4 px-4 rounded-sm w-full hover:bg-white hover:text-black hover:border-[3px] hover:border-cyan-950 transition-all duration-200 ease-in"
+        >
           Confirm
         </button>
       </div>
@@ -59,16 +62,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import mapStyles from '@/mapStyles'
+import { onMounted } from "vue";
+import mapStyles from "@/mapStyles";
 
-let map: google.maps.Map
+let map: google.maps.Map;
 
 async function initMap(): Promise<void> {
   const { Map } = (await google.maps.importLibrary(
-    'maps'
-  )) as google.maps.MapsLibrary
-  map = new Map(document.getElementById('map') as HTMLElement, {
+    "maps"
+  )) as google.maps.MapsLibrary;
+  map = new Map(document.getElementById("map") as HTMLElement, {
     center: { lat: 48.3794, lng: 31.1656 },
     zoom: 4,
     minZoom: 4,
@@ -77,15 +80,15 @@ async function initMap(): Promise<void> {
     zoomControl: false,
     streetViewControl: false,
     mapTypeControl: false,
-    styles: mapStyles()
-  })
+    styles: mapStyles(),
+  });
 }
 
 onMounted(() => {
   setTimeout(() => {
-    initMap()
-  }, 500)
-})
+    initMap();
+  }, 500);
+});
 </script>
 
 <style>
