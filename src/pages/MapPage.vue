@@ -14,7 +14,7 @@
       <div
         class="w-full text-center border-t-2 p-1.5 text-gray-700 text-lg font-semibold"
       >
-        Distance: {{ distance.text }}
+        Distance: {{ direction.distance.text }}
       </div>
       <div class="scrollSection">
         <div class="bg-slate-200 hover:bg-slate-300">
@@ -23,9 +23,11 @@
             <div class="w-full ml-3">
               <div class="flex items-center justify-between">
                 <p class="text-2xl mb-1">UUgo X</p>
-                <p class="text-xl">$ {{ calculatePrice(1, distance.value) }}</p>
+                <p class="text-xl">
+                  $ {{ calculatePrice(1, direction.distance.value) }}
+                </p>
               </div>
-              <p class="text-xl">{{ duration.text }}</p>
+              <p class="text-xl">{{ direction.duration.text }}</p>
             </div>
           </div>
         </div>
@@ -36,10 +38,10 @@
               <div class="flex items-center justify-between">
                 <p class="text-2xl mb-1">Comfort</p>
                 <p class="text-xl">
-                  $ {{ calculatePrice(1.25, distance.value) }}
+                  $ {{ calculatePrice(1.25, direction.distance.value) }}
                 </p>
               </div>
-              <p class="text-xl">{{ duration.text }}</p>
+              <p class="text-xl">{{ direction.duration.text }}</p>
             </div>
           </div>
         </div>
@@ -50,10 +52,10 @@
               <div class="flex items-center justify-between">
                 <p class="text-2xl mb-1">UUgo XL</p>
                 <p class="text-xl">
-                  $ {{ calculatePrice(1.5, distance.value) }}
+                  $ {{ calculatePrice(1.5, direction.distance.value) }}
                 </p>
               </div>
-              <p class="text-xl">{{ duration.text }}</p>
+              <p class="text-xl">{{ direction.duration.text }}</p>
             </div>
           </div>
         </div>
@@ -73,109 +75,13 @@
 </template>
 
 <script setup lang="ts">
-import axios from "axios";
 import ArrowLeftIcon from "vue-material-design-icons/ArrowLeft.vue";
 import { useRouter } from "vue-router";
 import { onMounted } from "vue";
-import { useDirectionStore } from "@/stores/direction";
-import { ref } from "vue";
-import mapStyles from "@/mapStyles";
+import { useDirectionStore } from "@/stores/map.store";
+import { calculatePrice } from "../lib/helpers/calculatePrice";
 const direction = useDirectionStore();
 const router = useRouter();
-let map: google.maps.Map;
-
-const distance = ref({
-  text: "",
-  value: null,
-});
-const duration = ref({
-  text: "",
-  value: null,
-});
-const latLng = ref({
-  start: {
-    lat: 0,
-    lng: 0,
-  },
-  end: {
-    lat: 0,
-    lng: 0,
-  },
-});
-
-async function initMap(): Promise<void> {
-  const directionsService = new window.google.maps.DirectionsService();
-  const directionsRenderer = new window.google.maps.DirectionsRenderer();
-
-  directionsRenderer.setOptions({
-    polylineOptions: {
-      strokeColor: "#212121",
-      strokeWeight: 5,
-    },
-  });
-
-  const { Map } = (await google.maps.importLibrary(
-    "maps"
-  )) as google.maps.MapsLibrary;
-  map = new Map(document.getElementById("map") as HTMLElement, {
-    zoom: 4,
-    minZoom: 3,
-    maxZoom: 17,
-    fullscreenControl: false,
-    zoomControl: false,
-    streetViewControl: false,
-    mapTypeControl: false,
-    styles: mapStyles(),
-  });
-
-  if (direction.pickup && direction.destination) {
-    getDirections(map, directionsRenderer, directionsService);
-    getDistance();
-  }
-}
-const getDirections = (
-  map: google.maps.Map,
-  directionsRenderer: google.maps.DirectionsRenderer,
-  directionsService: google.maps.DirectionsService
-) => {
-  directionsRenderer.setMap(map);
-
-  const request: google.maps.DirectionsRequest = {
-    origin: direction.pickup,
-    destination: direction.destination,
-    optimizeWaypoints: true, // set to true if you want google to determine the shortest route or false to use the order specified.
-    travelMode: google.maps.TravelMode.DRIVING,
-  };
-
-  directionsService.route(request, function (result, status) {
-    if (status === "OK") {
-      if (result) {
-        latLng.value.start.lat = result.routes[0].legs[0].start_location.lat();
-        latLng.value.start.lng = result.routes[0].legs[0].start_location.lng();
-        latLng.value.end.lat = result.routes[0].legs[0].end_location.lat();
-        latLng.value.end.lng = result.routes[0].legs[0].end_location.lng();
-      }
-
-      directionsRenderer.setDirections(result);
-    }
-  });
-};
-
-const getDistance = async () => {
-  let res = await axios.get(
-    "distance/" + direction.pickup + "/" + direction.destination
-  );
-
-  distance.value.text = res.data.rows[0].elements[0].distance.text;
-  distance.value.value = res.data.rows[0].elements[0].distance.value;
-  duration.value.text = res.data.rows[0].elements[0].duration.text;
-  duration.value.value = res.data.rows[0].elements[0].duration.value;
-};
-
-const calculatePrice = (multiplier: number, price: number) => {
-  let res = (price / 900) * multiplier;
-  return res.toFixed(2);
-};
 
 const goBack = () => {
   router.push("/directions");
@@ -185,7 +91,7 @@ onMounted(() => {
     router.push("/");
   }
   setTimeout(() => {
-    initMap();
+    direction.initMap();
   }, 500);
 });
 </script>

@@ -61,7 +61,7 @@ import ArrowLeftIcon from "vue-material-design-icons/ArrowLeft.vue";
 import MapMarkerIcon from "vue-material-design-icons/MapMarker.vue";
 import { debounce } from "lodash";
 import { onMounted, ref, watch } from "vue";
-import { useDirectionStore } from "../stores/direction";
+import { useDirectionStore } from "../stores/map.store";
 import { useRouter } from "vue-router";
 import axios from "axios";
 
@@ -180,3 +180,4 @@ onMounted(() => {
   }
 }
 </style>
+../stores/direction.store ../stores/map.store

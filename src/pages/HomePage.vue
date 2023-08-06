@@ -22,7 +22,7 @@
           @click="isNavigation('directions')"
           class="w-ful bg-slate-100 h-14 rounded-full flex items-center p-3"
         >
-          <MagnifyIcon size="40" />
+          <MagnifyIcon :size="40" />
           <div class="ml-3 text-xs font-semibold text-gray-700">
             Enter pick-up point
           </div>
@@ -62,7 +62,7 @@ import MagnifyIcon from "vue-material-design-icons/Magnify.vue";
 import HomeIcon from "vue-material-design-icons/Home.vue";
 import MapMarkerIcon from "vue-material-design-icons/MapMarker.vue";
 import { useRouter } from "vue-router";
-import { useDirectionStore } from "@/stores/direction";
+import { useDirectionStore } from "@/stores/map.store";
 import { onMounted } from "vue";
 const router = useRouter();
 const direction = useDirectionStore();
@@ -76,3 +76,4 @@ onMounted(() => {
   direction.destination = "";
 });
 </script>
+@/stores/direction.store @/stores/map.store
