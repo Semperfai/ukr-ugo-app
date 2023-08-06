@@ -1,5 +1,12 @@
 <template>
   <div id="MapPage">
+    <div
+      id="BackBtn"
+      class="absolute z-50 rounded-full bg-white p-1 top-8 left-4"
+      @click="goBack()"
+    >
+      <ArrowLeftIcon :size="40" />
+    </div>
     <div id="map" />
 
     <div id="VehicleSelection" class="w-full">
@@ -7,7 +14,7 @@
       <div
         class="w-full text-center border-t-2 p-1.5 text-gray-700 text-lg font-semibold"
       >
-        Distance: 0 km
+        Distance: {{ distance.text }}
       </div>
       <div class="scrollSection">
         <div class="bg-slate-200 hover:bg-slate-300">
@@ -15,10 +22,10 @@
             <img width="75" src="img/ukr-ugo/x.png" alt="car" />
             <div class="w-full ml-3">
               <div class="flex items-center justify-between">
-                <p class="text-2xl mb-1">UUgoX</p>
-                <p class="text-xl">$ 55.5</p>
+                <p class="text-2xl mb-1">UUgo X</p>
+                <p class="text-xl">$ {{ calculatePrice(1, distance.value) }}</p>
               </div>
-              <p class="text-xl">7 hourse</p>
+              <p class="text-xl">{{ duration.text }}</p>
             </div>
           </div>
         </div>
@@ -27,10 +34,12 @@
             <img width="75" src="img/ukr-ugo/comfort.png" alt="car" />
             <div class="w-full ml-3">
               <div class="flex items-center justify-between">
-                <p class="text-2xl mb-1">UUgoComfort</p>
-                <p class="text-xl">$ 55.5</p>
+                <p class="text-2xl mb-1">Comfort</p>
+                <p class="text-xl">
+                  $ {{ calculatePrice(1.25, distance.value) }}
+                </p>
               </div>
-              <p class="text-xl">7 hourse</p>
+              <p class="text-xl">{{ duration.text }}</p>
             </div>
           </div>
         </div>
@@ -39,10 +48,12 @@
             <img width="75" src="img/ukr-ugo/xl.png" alt="car" />
             <div class="w-full ml-3">
               <div class="flex items-center justify-between">
-                <p class="text-2xl mb-1">UUgoXL</p>
-                <p class="text-xl">$ 55.5</p>
+                <p class="text-2xl mb-1">UUgo XL</p>
+                <p class="text-xl">
+                  $ {{ calculatePrice(1.5, distance.value) }}
+                </p>
               </div>
-              <p class="text-xl">7 hourse</p>
+              <p class="text-xl">{{ duration.text }}</p>
             </div>
           </div>
         </div>
@@ -62,13 +73,25 @@
 </template>
 
 <script setup lang="ts">
+import axios from "axios";
+import ArrowLeftIcon from "vue-material-design-icons/ArrowLeft.vue";
+import { useRouter } from "vue-router";
 import { onMounted } from "vue";
-import mapStyles from "@/mapStyles";
 import { useDirectionStore } from "@/stores/direction";
 import { ref } from "vue";
-
+import mapStyles from "@/mapStyles";
 const direction = useDirectionStore();
+const router = useRouter();
 let map: google.maps.Map;
+
+const distance = ref({
+  text: "",
+  value: null,
+});
+const duration = ref({
+  text: "",
+  value: null,
+});
 const latLng = ref({
   start: {
     lat: 0,
@@ -107,6 +130,7 @@ async function initMap(): Promise<void> {
 
   if (direction.pickup && direction.destination) {
     getDirections(map, directionsRenderer, directionsService);
+    getDistance();
   }
 }
 const getDirections = (
@@ -136,7 +160,30 @@ const getDirections = (
     }
   });
 };
+
+const getDistance = async () => {
+  let res = await axios.get(
+    "distance/" + direction.pickup + "/" + direction.destination
+  );
+
+  distance.value.text = res.data.rows[0].elements[0].distance.text;
+  distance.value.value = res.data.rows[0].elements[0].distance.value;
+  duration.value.text = res.data.rows[0].elements[0].duration.text;
+  duration.value.value = res.data.rows[0].elements[0].duration.value;
+};
+
+const calculatePrice = (multiplier: number, price: number) => {
+  let res = (price / 900) * multiplier;
+  return res.toFixed(2);
+};
+
+const goBack = () => {
+  router.push("/directions");
+};
 onMounted(() => {
+  if (!direction.pickup || !direction.destination) {
+    router.push("/");
+  }
   setTimeout(() => {
     initMap();
   }, 500);

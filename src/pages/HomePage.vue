@@ -18,7 +18,10 @@
           <ServiceSelectSmall text="About app" icon-name="info" />
         </div>
 
-        <div class="w-ful bg-slate-100 h-14 rounded-full flex items-center p-3">
+        <div
+          @click="isNavigation('directions')"
+          class="w-ful bg-slate-100 h-14 rounded-full flex items-center p-3"
+        >
           <MagnifyIcon size="40" />
           <div class="ml-3 text-xs font-semibold text-gray-700">
             Enter pick-up point
@@ -36,7 +39,10 @@
             Home
           </div>
         </div>
-        <div class="grid place-items-center">
+        <div
+          @click="isNavigation('directions')"
+          class="grid place-items-center"
+        >
           <MapMarkerIcon :size="30" fillColor="#b3b1b1" />
           <div
             class="w-full -mt-1 text-xs text-center text-gray-400 font-semibold"
@@ -56,9 +62,17 @@ import MagnifyIcon from "vue-material-design-icons/Magnify.vue";
 import HomeIcon from "vue-material-design-icons/Home.vue";
 import MapMarkerIcon from "vue-material-design-icons/MapMarker.vue";
 import { useRouter } from "vue-router";
+import { useDirectionStore } from "@/stores/direction";
+import { onMounted } from "vue";
 const router = useRouter();
+const direction = useDirectionStore();
 
 const isNavigation = (path: string) => {
   router.push(path);
 };
+
+onMounted(() => {
+  direction.pickup = "";
+  direction.destination = "";
+});
 </script>
