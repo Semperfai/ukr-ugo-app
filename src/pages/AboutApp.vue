@@ -12,7 +12,9 @@
         </h1>
         <h2 class="text-2xl font-bold m-2">## App Setup</h2>
         <div class="flex justify-center items-start flex-wrap sm:flex-nowrap">
-          <ul class="flex max-w-[45%] flex-col gap-3 text-sm lg:text-lg">
+          <ul
+            class="flex w-full sm:max-w-[45%] flex-col gap-3 text-sm lg:text-lg"
+          >
             <li>
               Clone the repository git clone
               <span class="font-semibold"
