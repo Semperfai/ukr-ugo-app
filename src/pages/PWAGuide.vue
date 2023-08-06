@@ -3,7 +3,7 @@
     <base-container>
       <div class="flex flex-col gap-5 h-full p-10">
         <router-link to="/" class="mb-4">
-          <img width="140" src="img/ukr-ugo/logo.png" alt="logo" />
+          <img width="140" src="img/logo/logo.png" alt="logo" />
         </router-link>
         <h1 class="lg:text-2xl text-xl">
           Web Apps are apps built for the browser using web technologies such as
@@ -70,13 +70,13 @@
             class="grid grid-cols-1 justify-items-center items-center md:grid-cols-2 gap-3 my-3"
           >
             <img
-              class="max-w-[60%]"
-              src="mobile1.png"
+              class="max-w-[90%]"
+              src="mobile4.png"
               alt="example mobile img"
             />
             <img
               class="max-w-[60%]"
-              src="mobile2.png"
+              src="mobile1.png"
               alt="example mobile img"
             />
           </div>

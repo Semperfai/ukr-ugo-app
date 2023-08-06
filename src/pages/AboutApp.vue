@@ -3,7 +3,7 @@
     <base-container>
       <div class="flex flex-col gap-5 h-full p-10">
         <router-link to="/" class="mb-4">
-          <img width="140" src="img/ukr-ugo/logo.png" alt="logo" />
+          <img width="140" src="img/logo/logo.png" alt="logo" />
         </router-link>
         <h1 class="lg:text-2xl text-xl">
           This app has used Vue JS, Tailwind CSS, Node JS, Google Maps API, PWA

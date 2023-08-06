@@ -2,7 +2,7 @@
   <div id="Home" class="flex flex-col h-screen">
     <div class="m-3 mb-auto">
       <div class="my-10">
-        <img width="140" src="img/ukr-ugo/logo.png" alt="logo" />
+        <img width="140" src="img/logo/logo.png" alt="logo" />
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 my-3">
