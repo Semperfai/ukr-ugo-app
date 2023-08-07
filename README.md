@@ -1,24 +1,55 @@
-# app
+## App Setup
 
-## Project setup
+Clone the repository
 ```
-npm install
+git clone https://github.com/Semperfai/ukr-ugo-app.git
 ```
 
-### Compiles and hot-reloads for development
+Open a terminal, CD in to the folder and run these commands
+```
+npm i
+
+cp .env.example .env
+```
+
+Now go to https://console.cloud.google.com/
+
+Generate an API KEY.
+
+You'll need to ENABLE Maps API, Directions API, Places API, and Distance Matrix API.
+
+Add your new API KEY to the script inside **public/index.html**
+
+Now run this command to start the project 
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+And to start in PWA mode run the command
 ```
-npm run build
+npm run pwa
+```
+Open another terminal
+```
+cd server
+
+npm i
+
+cp .env.example .env
 ```
 
-### Lints and fixes files
+Add the Google API Key to the .env
+
 ```
-npm run lint
+GOOGLE_MAPS_API_KEY=keyhere
+
+npm run watch
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+# Application Images
+
+<p float="left">
+  <img width="270" alt="Screenshot" src="https://res.cloudinary.com/dnenvhtxp/image/upload/v1691435502/ukr-ugo/mobile1_xyrheu.png">
+  <img width="270" alt="Screenshot" src="https://res.cloudinary.com/dnenvhtxp/image/upload/v1691435502/ukr-ugo/mobile2_sktjh2.png">
+  <img width="270" alt="Screenshot" src="https://res.cloudinary.com/dnenvhtxp/image/upload/v1691435502/ukr-ugo/mobile3_fq9xin.png">
+</p>
